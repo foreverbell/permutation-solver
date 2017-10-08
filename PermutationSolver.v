@@ -9,8 +9,9 @@ Require Import Omega.
 
 Opaque Nat.eq_dec.
 
+(** Refer to README.md for documentation. *)
+
 (** (foreverbell): generalize to all decidable instances. *)
-(** (foreverbell): document some brief ideas. *)
 
 Lemma list_contents_app_multiplicity_plus :
   forall (a : nat) (l m : list nat),
