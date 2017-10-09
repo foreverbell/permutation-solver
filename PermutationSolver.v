@@ -1,8 +1,8 @@
 Require Import Coq.Arith.PeanoNat.
 Require Import Coq.Classes.RelationClasses.
-Require Import Coq.Lists.List.
+Require Export Coq.Lists.List.
 Require Import Coq.Sets.Multiset.
-Require Import Coq.Sorting.Permutation.
+Require Export Coq.Sorting.Permutation.
 Require Import Coq.Sorting.PermutSetoid.
 Require Import Coq.Sorting.PermutEq.
 Require Import Omega.
@@ -55,34 +55,3 @@ Ltac permutation_solver :=
     match goal with
     | [ |- context [if ?A then _ else _] ] => destruct A
     end; omega.
-
-(** Examples / Tests. *)
-
-Example permutation_1 :
-  forall (a b c d e : list nat) (x y : nat),
-    Permutation (a ++ e) (x :: c) ->
-    Permutation b (y :: d) ->
-    Permutation (a ++ b ++ e) (x :: y :: c ++ d).
-Proof.
-  intros; permutation_solver.
-Qed.
-
-Notation "[ x ]" := (cons x nil).
-Notation "[ x ; y ; .. ; z ]" := (cons x (cons y .. (cons z nil) ..)).
-
-Example permutation_2 :
-  forall (a b : list nat) (x y : nat),
-    Permutation a b ->
-    Permutation [x] [y] ->
-    Permutation (a ++ [x]) (y :: b).
-Proof.
-  intros; permutation_solver.
-Qed.
-
-Example permutation_butterfly :
-  forall (b u t e r f l y : nat) (xs ys : list nat),
-    Permutation xs ys ->
-    Permutation ([b;u;t;t;e;r]++[f;l;y]++xs) ([f;l;u;t;t;e;r]++ys++[b;y]).
-Proof.
-  intros; permutation_solver.
-Qed.
