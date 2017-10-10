@@ -40,7 +40,7 @@ all Permutations in hypotheses and goals to multiplicity calculation.
 Using it is rather simple.
 
 ```coq
-Example thm :
+Goal
   forall (a b c d e : list nat) (x y : nat),
     Permutation (a ++ e) (x :: c) ->
     Permutation b (y :: d) ->

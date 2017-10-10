@@ -1,6 +1,6 @@
 Require Import PermutationSolver.
 
-Example permutation_1 :
+Goal
   forall (a b c d e : list nat) (x y : nat),
     Permutation (a ++ e) (x :: c) ->
     Permutation b (y :: d) ->
@@ -12,7 +12,7 @@ Qed.
 Notation "[ x ]" := (cons x nil).
 Notation "[ x ; y ; .. ; z ]" := (cons x (cons y .. (cons z nil) ..)).
 
-Example permutation_2 :
+Goal
   forall (a b : list nat) (x y : nat),
     Permutation a b ->
     Permutation [x] [y] ->
@@ -21,7 +21,7 @@ Proof.
   intros; permutation_solver.
 Qed.
 
-Example permutation_butterfly :
+Goal
   forall (b u t e r f l y : nat) (xs ys : list nat),
     Permutation xs ys ->
     Permutation ([b;u;t;t;e;r]++[f;l;y]++xs) ([f;l;u;t;t;e;r]++ys++[b;y]).
