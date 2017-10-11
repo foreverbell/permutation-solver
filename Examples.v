@@ -28,3 +28,35 @@ Goal
 Proof.
   intros; permutation_solver.
 Qed.
+
+(** Proving preorder, inorder and postorder of a BST are permutation of each
+    other. *)
+Inductive tree : Set :=
+| Leaf : tree
+| Node : tree -> nat -> tree -> tree.
+
+Fixpoint inorder (t : tree) : list nat :=
+  match t with
+  | Leaf => nil
+  | Node l v r => inorder l ++ v :: inorder r
+  end.
+
+Fixpoint preorder (t : tree) : list nat :=
+  match t with
+  | Leaf => nil
+  | Node l v r => v :: preorder l ++ preorder r
+  end.
+
+Fixpoint postorder (t : tree) : list nat :=
+  match t with
+  | Leaf => nil
+  | Node l v r => postorder l ++ postorder r ++ [v]
+  end.
+
+Theorem tree_orders :
+  forall (t : tree),
+    Permutation (inorder t) (preorder t) /\
+    Permutation (inorder t) (postorder t).
+Proof.
+  induction t; simpl; intuition; permutation_solver.
+Qed.
