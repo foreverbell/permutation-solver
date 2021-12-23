@@ -5,7 +5,7 @@ Require Import Coq.Sets.Multiset.
 Require Export Coq.Sorting.Permutation.
 Require Import Coq.Sorting.PermutSetoid.
 Require Import Coq.Sorting.PermutEq.
-Require Import Omega.
+Require Import Lia.
 
 (** Refer to README.md for documentation. *)
 
@@ -50,4 +50,4 @@ Ltac permutation_solver Hdec :=
   repeat
     match goal with
     | [ |- context [if ?A then _ else _] ] => destruct A
-    end; omega.
+    end; lia.

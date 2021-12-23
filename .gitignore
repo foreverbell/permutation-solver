@@ -3,3 +3,5 @@
 *.vok
 *.vos
 .*.aux
+.lia.cache
+.nia.cache
