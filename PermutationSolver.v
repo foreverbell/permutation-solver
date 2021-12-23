@@ -7,50 +7,46 @@ Require Import Coq.Sorting.PermutSetoid.
 Require Import Coq.Sorting.PermutEq.
 Require Import Omega.
 
-Opaque Nat.eq_dec.
-
 (** Refer to README.md for documentation. *)
 
-(** (foreverbell): generalize to all decidable instances. *)
-
-Lemma list_contents_app_multiplicity_plus :
-  forall (a : nat) (l m : list nat),
-    multiplicity (list_contents eq Nat.eq_dec (l ++ m)) a =
-    multiplicity (list_contents eq Nat.eq_dec l) a +
-    multiplicity (list_contents eq Nat.eq_dec m) a.
+Lemma list_contents_app_multiplicity_plus {A} Hdec :
+  forall (a : A) (l m : list A),
+    multiplicity (list_contents eq Hdec (l ++ m)) a =
+    multiplicity (list_contents eq Hdec l) a +
+    multiplicity (list_contents eq Hdec m) a.
 Proof.
-  intros; specialize (list_contents_app eq Nat.eq_dec l m).
+  intros; specialize (list_contents_app eq Hdec l m).
   intros. unfold meq, munion in H.
   specialize (H a); auto.
 Qed.
 
-Ltac permutation_simplify a (* variable for functional extensionality *) :=
+Ltac permutation_simplify Hdec a (* variable for functional extensionality *) :=
   repeat
     match goal with
     | [ H : Permutation _ _ |- _ ] =>
-        rewrite (permutation_Permutation Nat.eq_dec) in H;
+        rewrite (permutation_Permutation Hdec) in H;
         unfold permutation, meq in H;
         specialize (H a);
         repeat (
           simpl list_contents in H;
           unfold munion in H;
           simpl multiplicity in H;
-          try rewrite list_contents_app_multiplicity_plus in H
+          try rewrite (list_contents_app_multiplicity_plus Hdec) in H
         )
     | [ |- Permutation _ _ ] =>
-        rewrite (permutation_Permutation Nat.eq_dec);
+        rewrite (permutation_Permutation Hdec);
         unfold permutation, meq;
         intros a;
         repeat (
           simpl list_contents;
           unfold munion;
           simpl multiplicity;
-          try rewrite list_contents_app_multiplicity_plus
+          try rewrite (list_contents_app_multiplicity_plus Hdec)
         )
     end.
 
-Ltac permutation_solver :=
-  let a := fresh "a" in permutation_simplify a;
+Ltac permutation_solver Hdec :=
+  let a := fresh "a" in permutation_simplify Hdec a;
   repeat
     match goal with
     | [ |- context [if ?A then _ else _] ] => destruct A

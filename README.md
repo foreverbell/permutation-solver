@@ -38,6 +38,8 @@ with addition should be trivial.
 Provide a tactics `permutation_solver` to attack permutations, which turns
 all Permutations in hypotheses and goals to multiplicity calculation.
 Using it is rather simple.
+It relies on a proof of decidability of equality for the type of the elements
+of the lists.
 
 ```coq
 Goal
@@ -46,6 +48,6 @@ Goal
     Permutation b (y :: d) ->
     Permutation (a ++ b ++ e) (x :: y :: c ++ d).
 Proof.
-  intros; permutation_solver.
+  intros; permutation_solver Nat.eq_dec.
 Qed.
 ```

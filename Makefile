@@ -3,4 +3,5 @@ all:
 	coqc Examples.v
 
 clean:
-	rm -f *.vo *.glob .*.aux
+	rm -f *.vo *.vok *.vos *.glob .*.aux
+
