@@ -22,16 +22,13 @@ goal. This kind of proof method is boring and lengthy to develop.
 
 ## Idea
 
-Coq actually provides another way to define [permutation](https://coq.inria.fr/distrib/current/stdlib/Coq.Sorting.PermutSetoid.html#permutation).
 Here, the basic idea is, two lists are considered as permutation of each other,
 if and only if all elements have the same multiplicity in both lists. This
-property is proven as [a part of Coq's standard library](https://github.com/coq/coq/blob/307f08d2ad2aca5d48441394342af4615810d0c7/theories/Sorting/PermutEq.v#L123).
+property is proven as [a part of Coq's standard library](https://github.com/coq/coq/blob/19a8c5723625dbf49890f17858d330eb2f5ba94d/theories/Sorting/Permutation.v#L540).
 
 With this theorem, we transform the problem of proving permutation to simple
-multiplicity calculation, which is easy to be automated via Omega tactics in
-Coq. This should work, since list appending is transformed into multiplicity
-addition in this way, solving equations over the group of natural numbers
-with addition should be trivial.
+multiplicity calculation, which is easy to be automated via `lia` tactics in
+Coq.
 
 ## Implementation
 
